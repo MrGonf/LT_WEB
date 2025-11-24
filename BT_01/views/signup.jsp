@@ -1,162 +1,137 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Đăng ký tài khoản</title>
-<style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #4e54c8, #8f94fb);
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+	pageEncoding="UTF-8"%>
+<%@ include file="/commons/taglib.jsp"%>
 
-    .container {
-        width: 420px;
-        padding: 40px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(12px);
-        border-radius: 14px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        animation: fadeIn 0.6s ease;
-    }
+<div class="main">
+	<div class="container">
+		<!-- BEGIN CONTENT -->
+			<div class="content-form-page">
+				<div class="row">
+					<div class="col-md-7 col-sm-7">
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+						<!-- Hiển thị thông báo -->
+						<c:if test="${not empty alert}">
+							<div class="alert">${alert}</div>
+						</c:if>
 
-    h2 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #333;
-        font-weight: 600;
-    }
+						<form action="${pageContext.request.contextPath}/signup"
+							method="post" class="form-horizontal" role="form">
 
-    .alert {
-        background: #ffdddd;
-        border-left: 6px solid #f44336;
-        padding: 12px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        color: #a94442;
-        font-size: 14px;
-        text-align: center;
-        animation: fadeIn 0.5s ease-in-out;
-    }
+							<!-- PERSONAL DETAILS -->
+							<fieldset>
+								<legend>Your personal details</legend>
 
-    input {
-        width: 100%;
-        padding: 12px 15px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 15px;
-        outline: none;
-        transition: 0.3s;
-    }
+								<!-- Username -->
+								<div class="form-group">
+									<label for="uname" class="col-lg-4 control-label">
+										Username <span class="require">*</span>
+									</label>
+									<div class="col-lg-8">
+										<input type="text" class="form-control" id="uname"
+											name="username" value="${param.username}" required>
+									</div>
+								</div>
 
-    input:focus {
-        border-color: #4e54c8;
-        box-shadow: 0 0 6px rgba(78, 84, 200, 0.4);
-    }
+								<!-- Fullname -->
+								<div class="form-group">
+									<label for="lastname" class="col-lg-4 control-label">
+										Full Name <span class="require">*</span>
+									</label>
+									<div class="col-lg-8">
+										<input type="text" class="form-control" id="lastname"
+											name="fullname" value="${param.fullname}" required>
+									</div>
+								</div>
 
-    button {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s;
-        margin-top: 10px;
-    }
+								<!-- Email -->
+								<div class="form-group">
+									<label for="email" class="col-lg-4 control-label">
+										Email <span class="require">*</span>
+									</label>
+									<div class="col-lg-8">
+										<input type="email" class="form-control" id="email"
+											name="email" value="${param.email}" required>
+									</div>
+								</div>
+							</fieldset>
 
-    .btn-register {
-        background: #4e54c8;
-        color: white;
-    }
+							<!-- PASSWORD -->
+							<fieldset>
+								<legend>Your password</legend>
 
-    .btn-register:hover {
-        background: #3b41a1;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+								<!-- Password -->
+								<div class="form-group">
+									<label for="password" class="col-lg-4 control-label">
+										Password <span class="require">*</span>
+									</label>
+									<div class="col-lg-8">
+										<input type="password" class="form-control" id="password"
+											name="password" required>
+									</div>
+								</div>
 
-    .login-link {
-        margin-top: 15px;
-        text-align: center;
-        font-size: 14px;
-    }
+								<!-- Confirm -->
+								<div class="form-group">
+									<label for="confirm-password" class="col-lg-4 control-label">
+										Confirm password <span class="require">*</span>
+									</label>
+									<div class="col-lg-8">
+										<input type="password" class="form-control"
+											id="confirm-password" name="confirmPassword" required>
+									</div>
+								</div>
+							</fieldset>
 
-    .login-link a {
-        color: #4e54c8;
-        text-decoration: none;
-        font-weight: 500;
-    }
+							<!-- PHONE -->
+							<fieldset>
+								<legend>Your phone number</legend>
 
-    .login-link a:hover {
-        text-decoration: underline;
-    }
+								<!-- Phone -->
+								<div class="form-group">
+									<label for="phone" class="col-lg-4 control-label">
+										Phone Number <span class="require">*</span>
+									</label>
+									<div class="col-lg-8">
+										<input type="text" class="form-control" id="phone"
+											name="phone" required>
+									</div>
+								</div>
 
-    form input::placeholder {
-        color: #999;
-    }
+							</fieldset>
 
-    @media (max-width: 450px) {
-        .container {
-            width: 90%;
-            padding: 25px;
-        }
-    }
-</style>
-</head>
-<body>
+							<!-- BUTTON -->
+							<div class="row">
+								<div
+									class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+									<button type="submit" class="btn btn-primary">Create
+										an account</button>
+									<button type="button" class="btn btn-default"
+										onclick="window.location='${pageContext.request.contextPath}/home'">
+										Cancel</button>
+								</div>
+							</div>
 
-<div class="container">
-    <h2>Đăng ký tài khoản</h2>
+						</form>
+					</div>
 
-    <% 
-        String alert = (String) request.getAttribute("alert");
-        if (alert != null) {
-    %>
-        <div class="alert"><%= alert %></div>
-    <% } %>
+					<!-- RIGHT INFO -->
+					<div class="col-md-4 col-sm-4 pull-right">
+						<div class="form-info">
+							<h2>
+								<em>Important</em> Information
+							</h2>
 
-    <form action="${pageContext.request.contextPath}/signup" method="post">
+							<p>Lorem ipsum dolor sit amet...</p>
+							<p>Duis autem vel eum iriure dolor...</p>
 
-        <input type="text" name="username" placeholder="Tài khoản" 
-               value="<%= request.getParameter("username") != null ? request.getParameter("username") : "" %>" required>
+							<button type="button" class="btn btn-default">More
+								details</button>
+						</div>
+					</div>
 
-        <input type="password" name="password" placeholder="Mật khẩu" required>
-
-        <input type="text" name="fullname" placeholder="Họ và tên"
-               value="<%= request.getParameter("fullname") != null ? request.getParameter("fullname") : "" %>" required>
-
-        <input type="email" name="email" placeholder="Email"
-               value="<%= request.getParameter("email") != null ? request.getParameter("email") : "" %>" required>
-
-        <input type="text" name="phone" placeholder="Số điện thoại"
-               value="<%= request.getParameter("phone") != null ? request.getParameter("phone") : "" %>" required>
-
-        <button type="submit" class="btn-register">Đăng ký</button>
-    </form>
-
-    <div class="login-link">
-        Đã có tài khoản? <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
-    </div>
+				</div>
+			</div>
+		</div>
+		<!-- END CONTENT -->
+	</div>
 </div>
-
-</body>
-</html>

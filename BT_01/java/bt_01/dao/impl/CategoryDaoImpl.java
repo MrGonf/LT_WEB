@@ -68,7 +68,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 	@Override
 	public void insert(CategoryModel category) {
-		String sql = "INSERT INTO * FROM categories(categoryname, iamges, stautus) VALUES (?,?,?)";
+		String sql = "INSERT INTO categories (categoryname, images, status) VALUES (?, ?, ?)";
 		try {
 			conn = DBMySQLConnect.getDatabaseConnection();
 			ps = conn.prepareStatement(sql);
@@ -86,7 +86,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 
 	@Override
 	public void update(CategoryModel category) {
-		String sql = "UPDATE categories SET categoryname = ?, iamges = ?, stautus = ? WHERE categoryid = ?";
+		String sql = "UPDATE categories SET categoryname = ?, images = ?, status = ? WHERE categoryid = ?";
 		try {
 			conn = DBMySQLConnect.getDatabaseConnection();
 			ps = conn.prepareStatement(sql);
